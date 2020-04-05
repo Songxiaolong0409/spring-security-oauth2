@@ -1,0 +1,15 @@
+server:
+  port: 48279
+spring:
+  application:
+    name: @pom.artifactId@
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.96.75.125:3306/ids?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: Fih147wd!@#
+    hikari:
+      connection-test-query: SELECT 1
+      minimum-idle: 5
+      maximum-pool-size: 10
+      max-lifetime: 100000
