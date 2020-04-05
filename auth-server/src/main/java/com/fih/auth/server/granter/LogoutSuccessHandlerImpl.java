@@ -1,8 +1,10 @@
 package com.fih.auth.server.granter;
 
+import com.fih.auth.server.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -30,7 +32,7 @@ public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
         String auth = httpServletRequest.getHeader(HEADER_AUTHENTICATION);
         String token = httpServletRequest.getParameter("access_token");
         if (auth != null && auth.startsWith(BEARER_AUTHENTICATION)) {
-            token = token.split(" ")[0];
+            token = auth.split(" ")[1];
         }
 
         if (token != null) {
@@ -39,5 +41,7 @@ public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
                 tokenStore.removeAccessToken(accessToken);
             }
         }
+
+        Result.print200(httpServletResponse,"Successfully cleared token");
     }
 }

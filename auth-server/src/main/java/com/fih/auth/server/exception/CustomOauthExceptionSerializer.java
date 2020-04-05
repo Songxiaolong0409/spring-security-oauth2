@@ -3,13 +3,12 @@ package com.fih.auth.server.exception;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.fih.auth.server.common.Result;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
-import java.util.Map;
 
 /**
  * @author songxiaolong
@@ -23,12 +22,11 @@ public class CustomOauthExceptionSerializer extends StdSerializer<CustomOauthExc
 
     @Override
     public void serialize(CustomOauthException value, JsonGenerator gen, SerializerProvider provider) throws IOException {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        /*HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 
         gen.writeStartObject();
         gen.writeStringField("error", String.valueOf(value.getHttpErrorCode()));
         gen.writeStringField("message", value.getMessage());
-//        gen.writeStringField("message", "用户名或密码错误");
         gen.writeStringField("path", request.getServletPath());
         gen.writeStringField("timestamp", String.valueOf(new Date().getTime()));
         if (value.getAdditionalInformation()!=null) {
@@ -38,6 +36,10 @@ public class CustomOauthExceptionSerializer extends StdSerializer<CustomOauthExc
                 gen.writeStringField(key, add);
             }
         }
-        gen.writeEndObject();
+        gen.writeEndObject();*/
+
+        HttpServletResponse response=((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
+
+        Result.print(response,Result.buildFail(value.getHttpErrorCode(),value.getMessage()));
     }
 }

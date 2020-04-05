@@ -1,6 +1,6 @@
 package com.fih.auth.server.controller;
 
-import com.fih.auth.server.model.Result;
+import com.fih.auth.server.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;

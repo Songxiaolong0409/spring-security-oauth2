@@ -1,6 +1,6 @@
 package com.fih.auth.server.granter;
 
-import com.fih.auth.server.AuthorizedGrantTypes;
+import com.fih.auth.server.common.AuthorizedGrantTypes;
 import com.fih.auth.server.model.OauthUser;
 import com.fih.auth.server.service.CustomUserDetailsService;
 import org.springframework.security.oauth2.provider.ClientDetailsService;

@@ -4,7 +4,7 @@
 package com.fih.auth.server.service;
 
 import com.fih.auth.server.model.CustomRequest;
-import com.fih.auth.server.model.Result;
+import com.fih.auth.server.common.Result;
 
 /**
  * <p>

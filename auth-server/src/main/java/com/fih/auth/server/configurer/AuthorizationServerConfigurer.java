@@ -11,6 +11,7 @@ import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -32,8 +33,10 @@ import org.springframework.security.oauth2.provider.code.AuthorizationCodeServic
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeTokenGranter;
 import org.springframework.security.oauth2.provider.password.ResourceOwnerPasswordTokenGranter;
 import org.springframework.security.oauth2.provider.token.*;
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 import javax.sql.DataSource;
 import java.util.*;
@@ -49,6 +52,9 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
 
     @Autowired
     private DataSource dataSource;
+
+    @Autowired
+    private RedisConnectionFactory connectionFactory;
 
     @Autowired
     private CustomUserDetailsService userDetailsService;
@@ -77,7 +83,8 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
 
     @Bean
     public TokenStore jwtStore() {
-        TokenStore tokenStore = new JwtTokenStore(accessTokenConverter());
+//        TokenStore tokenStore = new JwtTokenStore(accessTokenConverter());
+        TokenStore tokenStore=new RedisTokenStore(connectionFactory);
         return tokenStore;
     }
 

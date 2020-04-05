@@ -1,5 +1,6 @@
 package com.fih.auth.server;
 
+import com.fih.auth.server.common.AuthorizedGrantTypes;
 import com.fih.auth.server.dao.IOauthClientDetailsDao;
 import com.fih.auth.server.model.OauthClientDetails;
 import net.sf.json.JSONObject;

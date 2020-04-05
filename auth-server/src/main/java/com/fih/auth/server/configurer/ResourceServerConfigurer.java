@@ -32,7 +32,7 @@ public class ResourceServerConfigurer extends ResourceServerConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .logout()
-                .logoutUrl("/logout")
+                .logoutUrl("/loginout")
                 .logoutSuccessHandler(logoutSuccessHandler)
                 .and()
                 .csrf().disable()

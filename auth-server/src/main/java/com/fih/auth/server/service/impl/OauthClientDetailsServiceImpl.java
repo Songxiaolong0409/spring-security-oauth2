@@ -2,12 +2,12 @@
  * Copyright @2020-03-29 Fih-foxconn All Rights Reserved
  */
 package com.fih.auth.server.service.impl;
-import com.fih.auth.server.AuthorizedGrantTypes;
+import com.fih.auth.server.common.AuthorizedGrantTypes;
 import com.fih.auth.server.dao.IOauthClientDetailsDao;
 import com.fih.auth.server.exception.CustomOauthException;
 import com.fih.auth.server.model.CustomRequest;
 import com.fih.auth.server.model.OauthClientDetails;
-import com.fih.auth.server.model.Result;
+import com.fih.auth.server.common.Result;
 import com.fih.auth.server.service.IOauthClientDetailsService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.RandomStringUtils;

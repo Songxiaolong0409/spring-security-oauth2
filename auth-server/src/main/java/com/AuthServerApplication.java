@@ -1,6 +1,6 @@
 package com;
 
-import com.fih.auth.server.model.Result;
+import com.fih.auth.server.common.Result;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.converter.HttpMessageConversionException;
@@ -31,8 +31,7 @@ public class AuthServerApplication {
     @ResponseBody
     @ExceptionHandler(Exception.class)
     public Result exceptionHandler(Exception e) {
-        e.printStackTrace();
-        return Result.buildFail(500, e.getMessage());
+        return Result.buildFail500(e.getMessage());
     }
 
     /**
@@ -54,7 +53,7 @@ public class AuthServerApplication {
             buffer.append(fieldError.getField()).append(fieldError.getDefaultMessage()).append(" ;");
         });
 
-        return Result.buildFail(600,buffer.toString());
+        return Result.buildFail600(buffer.toString());
     }
 
     /**
@@ -66,6 +65,6 @@ public class AuthServerApplication {
     @ExceptionHandler(HttpMessageConversionException.class)
     @ResponseBody
     public Result parameterTypeException(HttpMessageConversionException exception){
-        return Result.buildFail(400,exception.getMessage());
+        return Result.buildFail400(exception.getMessage());
     }
 }

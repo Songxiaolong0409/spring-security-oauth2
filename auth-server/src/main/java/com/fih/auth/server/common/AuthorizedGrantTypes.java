@@ -1,4 +1,4 @@
-package com.fih.auth.server;
+package com.fih.auth.server.common;
 
 public enum AuthorizedGrantTypes {
 

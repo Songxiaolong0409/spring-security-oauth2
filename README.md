@@ -271,15 +271,15 @@ client_id|客户端id|	String|y
     
 ### 7. 刷新 access_token
 
-6.1. 请求地址
+7.1. 请求地址
 
 	/oauth/token
 
-6.2. 请求方式
+7.2. 请求方式
 
 	http-post Params
 
-6.3 请求参数说明
+7.3 请求参数说明
 
 参数名|说明 |类型 |是否必填
 ----|-------|------|-------
@@ -288,7 +288,7 @@ client_secret|客户度密钥|String |Y
 grant_type|获取token方式,本例中固定值'refresh_token'|String|y
 refresh_token|refreshToken|String|y
 
-6.4 返回参数说明
+7.4 返回参数说明
 
 参数名|说明 |类型 |是否必填
 ----|-------|------|-------
@@ -298,7 +298,7 @@ jti|token id|String |Y
 accessToken|请求后续接口需要的token|String|Y
 refreshToken|刷新accessToken时需要的token|String|Y
 
-6.5. 接口返回示例
+7.5. 接口返回示例
 
     {
         "success": true,
@@ -316,4 +316,29 @@ refreshToken|刷新accessToken时需要的token|String|Y
             "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODYxNjc5OTEsInVzZXJfaWQiOm51bGwsInVzZXJfbmFtZSI6eyJlbmFibGVkIjp0cnVlLCJjcmVkZW50aWFsc05vbkV4cGlyZWQiOnRydWUsImFjY291bnROb25Mb2NrZWQiOnRydWUsImFjY291bnROb25FeHBpcmVkIjp0cnVlfSwianRpIjoiOGE1YWViYjItNjgzYi00MDEzLWEzYTQtMDMxZTI4NWY0YjU3IiwiY2xpZW50X2lkIjoiZHJpdmVyX2lvc185MTE0MjciLCJzY29wZSI6WyJhbGwiXX0.VEt4t7IdUACccKnWmjgKDUpbJw1921q5GYVqRI5t9Yc",
             "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VyX25hbWUiOnsidXNlcklkIjoxLCJjbGllbnRJZCI6ImRyaXZlcl9pb3NfOTExNDI3IiwiYXJlYUNvZGUiOiIrODYiLCJtb2JpbGUiOiIxMzQxODg4NDYwMCIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbmFibGVkIjp0cnVlLCJjcmVkZW50aWFsc05vbkV4cGlyZWQiOnRydWUsImFjY291bnROb25Mb2NrZWQiOnRydWUsImFjY291bnROb25FeHBpcmVkIjp0cnVlfSwic2NvcGUiOlsiYWxsIl0sImF0aSI6ImZkZWQ1NWU0LTBlNDctNGQzYi1iN2YzLWEzOGVhZDgyOTZhMCIsImV4cCI6MTU4NjY4NTg0NywianRpIjoiYjQzYzMxZmItZmNiNy00MzI2LTg1OGYtNjVjYmY1MmYwM2E2IiwiY2xpZW50X2lkIjoiZHJpdmVyX2lvc185MTE0MjcifQ.K4O6M-7C2TYUa4UpnGwxhJxfuxqBlK8NxQq8PPE2atE"
         }
+    }
+    
+### 8. 退出登录，注销 access_token
+
+8.1. 请求地址
+
+	/loginout
+
+8.2. 请求方式
+
+	http-post Authorization requet Headers Access Token
+
+8.3 请求参数说明
+
+参数名|说明 |类型 |是否必填
+----|-------|------|-------
+Access Token|需要注销的Access Token|	String|Y
+
+8.4. 接口返回示例
+
+    {
+        "success": true,
+        "code": 200,
+        "msg": "OK",
+        "data": "Successfully cleared token"
     }
