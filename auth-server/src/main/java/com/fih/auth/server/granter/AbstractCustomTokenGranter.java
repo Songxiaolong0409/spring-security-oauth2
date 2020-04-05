@@ -1,6 +1,6 @@
 package com.fih.auth.server.granter;
 
-import com.fih.auth.server.model.CustomUser;
+import com.fih.auth.server.model.OauthUser;
 import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
 import org.springframework.security.oauth2.provider.*;
 import org.springframework.security.oauth2.provider.token.AbstractTokenGranter;
@@ -25,17 +25,17 @@ public abstract class AbstractCustomTokenGranter extends AbstractTokenGranter {
     @Override
     protected OAuth2Authentication getOAuth2Authentication(ClientDetails client, TokenRequest tokenRequest) {
         Map<String, String> parameters = tokenRequest.getRequestParameters();
-        CustomUser customUser = getCustomUser(parameters);
-        if (customUser == null) {
+        OauthUser oauthUser = getOauthUser(parameters);
+        if (oauthUser == null) {
             throw new InvalidGrantException("无法获取用户信息");
         }
         OAuth2Request storedOAuth2Request = this.requestFactory.createOAuth2Request(client, tokenRequest);
-        PreAuthenticatedAuthenticationToken authentication = new PreAuthenticatedAuthenticationToken(customUser, null, customUser.getAuthorities());
-        authentication.setDetails(customUser);
+        PreAuthenticatedAuthenticationToken authentication = new PreAuthenticatedAuthenticationToken(oauthUser, null, oauthUser.getAuthorities());
+        authentication.setDetails(oauthUser);
         OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(storedOAuth2Request, authentication);
         return oAuth2Authentication;
     }
 
-    protected abstract CustomUser getCustomUser(Map<String, String> parameters);
+    protected abstract OauthUser getOauthUser(Map<String, String> parameters);
 
 }

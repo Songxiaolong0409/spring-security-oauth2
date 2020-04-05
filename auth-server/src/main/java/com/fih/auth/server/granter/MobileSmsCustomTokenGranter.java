@@ -1,7 +1,7 @@
 package com.fih.auth.server.granter;
 
 import com.fih.auth.server.AuthorizedGrantTypes;
-import com.fih.auth.server.model.CustomUser;
+import com.fih.auth.server.model.OauthUser;
 import com.fih.auth.server.service.CustomUserDetailsService;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.OAuth2RequestFactory;
@@ -24,7 +24,7 @@ public class MobileSmsCustomTokenGranter extends AbstractCustomTokenGranter {
     }
 
     @Override
-    protected CustomUser getCustomUser(Map<String, String> parameters) {
+    protected OauthUser getOauthUser(Map<String, String> parameters) {
         String client_id = parameters.get("client_id");
         String area_code = parameters.get("area_code");
         String mobile = parameters.get("mobile");

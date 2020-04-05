@@ -4,13 +4,11 @@ import com.fih.auth.server.exception.CustomWebResponseExceptionTranslator;
 import com.fih.auth.server.granter.CustomRefreshTokenGranter;
 import com.fih.auth.server.granter.MobilePasswordCustomTokenGranter;
 import com.fih.auth.server.granter.MobileSmsCustomTokenGranter;
-import com.fih.auth.server.model.CustomUser;
 import com.fih.auth.server.model.OauthUser;
 import com.fih.auth.server.service.CustomUserDetailsService;
 import com.fih.auth.server.service.IOauthUserService;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -29,7 +27,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.*;
-import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationManager;
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeTokenGranter;
@@ -180,7 +177,7 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
                 return oAuth2AccessToken;
             }
         });*/
-        endpoints.allowedTokenEndpointRequestMethods(HttpMethod.GET,HttpMethod.POST);
+        endpoints.allowedTokenEndpointRequestMethods(HttpMethod.POST);
     }
 
     private List<TokenGranter> getTokenGranters(AuthorizationCodeServices authorizationCodeServices,
@@ -213,28 +210,26 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
 
 //                String userName = authentication.getUserAuthentication().getName();
                 // 与登录时候放进去的UserDetail实现类一直查看link{SecurityConfiguration}
-                CustomUser user=null;
                 OauthUser oauthUser=null;
                 Object object=authentication.getUserAuthentication().getPrincipal();
-                if(object instanceof CustomUser){
-                    user = (CustomUser)object;
-                }else if(object instanceof OauthUser){
-                    oauthUser= (OauthUser) object;
+                if(object instanceof OauthUser){
+                    oauthUser = (OauthUser)object;
                 }else{
-                    user= (CustomUser) JSONObject.toBean(JSONObject.fromObject(object),CustomUser.class);
+                    oauthUser= (OauthUser) JSONObject.toBean(JSONObject.fromObject(object),OauthUser.class);
                 }
                 if(oauthUser==null){
                     oauthUser=new OauthUser();
-                    oauthUser.setEmail(user.getEmail());
-                    oauthUser.setAreaCode(user.getAreaCode());
-                    oauthUser.setMobile(user.getMobile());
-                    oauthUser.setUsername(user.getUsername());
+                    oauthUser.setEmail(oauthUser.getEmail());
+                    oauthUser.setAreaCode(oauthUser.getAreaCode());
+                    oauthUser.setMobile(oauthUser.getMobile());
+                    oauthUser.setUsername(oauthUser.getUsername());
                     oauthUser=oauthUserService.getOauthUser(oauthUser);
                 }
                 /** 自定义一些token属性 ***/
+                oauthUser.setPassword(null);
                 Map<String, Object> additionalInformation = new HashMap<>();
                 additionalInformation.put("user_id",oauthUser.getUserId());
-                additionalInformation.put("user_name", user);//必须返回user_name字段
+                additionalInformation.put("user_name", oauthUser);//必须返回user_name字段
                 ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInformation);
                 OAuth2AccessToken enhancedToken = super.enhance(accessToken, authentication);
                 return enhancedToken;

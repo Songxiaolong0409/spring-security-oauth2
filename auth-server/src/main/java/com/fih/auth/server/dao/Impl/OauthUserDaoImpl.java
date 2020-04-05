@@ -2,7 +2,6 @@ package com.fih.auth.server.dao.Impl;
 
 import com.fih.auth.server.dao.BaseDao;
 import com.fih.auth.server.dao.IOauthUserDao;
-import com.fih.auth.server.model.CustomUser;
 import com.fih.auth.server.model.OauthUser;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
@@ -11,17 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class OauthUserDaoImpl extends BaseDao<CustomUser> implements IOauthUserDao {
+public class OauthUserDaoImpl extends BaseDao<OauthUser> implements IOauthUserDao {
 
     @Override
-    public CustomUser getCustomUserByMobile(String areaCode, String mobile, String clientId) {
-        String sql="select * from oauth_user where area_code=? and mobile=? and client_id=?";
-        return queryForObject(sql,new Object[]{areaCode,mobile,clientId}, CustomUser.class);
+    public OauthUser getCustomUserByMobile(String areaCode, String mobile, String clientId) {
+        String sql="select user_id,client_id,area_code,mobile,username,password,email from oauth_user where area_code=? and mobile=? and client_id=? and status=1";
+        return queryForObject(sql,new Object[]{areaCode,mobile,clientId}, OauthUser.class);
     }
 
     @Override
     public OauthUser getOauthUser(OauthUser user) {
-        StringBuffer sql=new StringBuffer("select * from oauth_user where 1=1 ");
+        StringBuffer sql=new StringBuffer("select user_id,client_id,area_code,mobile,username,password,email from oauth_user where status=1 ");
 
         List<Object> list=new ArrayList<>();
         if(StringUtils.hasLength(user.getMobile())){
