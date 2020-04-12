@@ -31,7 +31,7 @@ public class Result {
     private int code;
 
     //返回信息
-    private String msg;
+    private String message;
 
     //返回数据
     private Object data;
