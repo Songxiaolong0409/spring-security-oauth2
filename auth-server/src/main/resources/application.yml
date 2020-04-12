@@ -17,11 +17,11 @@ spring:
     host: 47.96.75.125
     port: 6379
     password: Fih123456
-    timeout: 5000ms
+    timeout: 100000ms
     database: 1
     jedis:
       pool:
         max-active: 300
         max-idle: 100
         min-idle: 100
-        max-wait: 5000ms
+        max-wait: 50000ms

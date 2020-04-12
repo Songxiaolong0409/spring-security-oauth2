@@ -13,4 +13,8 @@ public class CustomOauthException extends OAuth2Exception {
     public CustomOauthException(String msg) {
         super(msg);
     }
+
+    public CustomOauthException(String msg, Throwable t) {
+        super(msg, t);
+    }
 }

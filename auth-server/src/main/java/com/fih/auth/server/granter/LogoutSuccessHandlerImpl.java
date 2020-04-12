@@ -39,9 +39,12 @@ public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
             OAuth2AccessToken accessToken = tokenStore.readAccessToken(token);
             if (accessToken != null) {
                 tokenStore.removeAccessToken(accessToken);
+
+                Result.print200(httpServletResponse,"Successfully cleared token");
             }
+            Result.print401(httpServletResponse,"Failed to clear token,Token invalid");
         }
 
-        Result.print200(httpServletResponse,"Successfully cleared token");
+        Result.print401(httpServletResponse,"Failed to clear token,Parameter in header does not exist");
     }
 }

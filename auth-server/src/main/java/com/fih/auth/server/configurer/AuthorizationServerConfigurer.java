@@ -1,5 +1,6 @@
 package com.fih.auth.server.configurer;
 
+import com.fih.auth.server.exception.CustomAuthenticationFilter;
 import com.fih.auth.server.exception.CustomWebResponseExceptionTranslator;
 import com.fih.auth.server.granter.CustomRefreshTokenGranter;
 import com.fih.auth.server.granter.MobilePasswordCustomTokenGranter;
@@ -69,6 +70,9 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private CustomAuthenticationFilter customAuthenticationFilter;
+
 
     //这个是定义授权的请求的路径的Bean
     @Bean
@@ -120,6 +124,7 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
      */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+        security.addTokenEndpointAuthenticationFilter(customAuthenticationFilter);
         security.allowFormAuthenticationForClients()
                 .tokenKeyAccess("isAuthenticated()")
                 //允许 check_token 访问
@@ -169,7 +174,6 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
                 endpoints.getTokenStore(), endpoints.getTokenServices(), endpoints.getClientDetailsService(),
                 endpoints.getOAuth2RequestFactory());
 
-        endpoints.exceptionTranslator(webResponseExceptionTranslator);
         endpoints.tokenGranter(new CompositeTokenGranter(tokenGranters));
         /*endpoints.tokenEnhancer(new TokenEnhancer() {
             @Override
@@ -185,6 +189,7 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
             }
         });*/
         endpoints.allowedTokenEndpointRequestMethods(HttpMethod.POST);
+        endpoints.exceptionTranslator(webResponseExceptionTranslator);
     }
 
     private List<TokenGranter> getTokenGranters(AuthorizationCodeServices authorizationCodeServices,
