@@ -16,7 +16,7 @@
     {
         "success": false,
         "code": 500,
-        "msg": "Send SMS Code Error: AuthorizedGrantTypes is not found."
+        "message": "Send SMS Code Error: AuthorizedGrantTypes is not found."
     } 
 
 1.2 接口正确返回格式
@@ -24,7 +24,7 @@
     {
         "success": true,
         "code": 200,
-        "msg": "操作成功"
+        "message": "操作成功"
         "data":""
     }
     
@@ -105,7 +105,7 @@ refreshToken|刷新accessToken时需要的token|String|Y
     {
         "success": true,
         "code": 200,
-        "msg": "操作成功",
+        "message": "操作成功",
         "data": {
             "user_id": 1,
             "user_name": {
@@ -155,7 +155,7 @@ refreshToken|刷新accessToken时需要的token|String|Y
     {
         "success": true,
         "code": 200,
-        "msg": "操作成功",
+        "message": "操作成功",
         "data": {
             "user_id": 1,
             "user_name": {
@@ -204,7 +204,7 @@ refreshToken|刷新accessToken时需要的token|String|Y
      {
         "success": true,
         "code": 200,
-        "msg": "操作成功",
+        "message": "操作成功",
         "data": {
             "user_id": 1,
             "user_name": {
@@ -303,7 +303,7 @@ refreshToken|刷新accessToken时需要的token|String|Y
     {
         "success": true,
         "code": 200,
-        "msg": "操作成功",
+        "message": "操作成功",
         "data": {
             "user_id": null,
             "user_name": {
@@ -339,6 +339,6 @@ Access Token|需要注销的Access Token|	String|Y
     {
         "success": true,
         "code": 200,
-        "msg": "OK",
+        "message": "OK",
         "data": "Successfully cleared token"
     }
