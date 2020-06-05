@@ -76,6 +76,11 @@ public class OauthUser implements Serializable, UserDetails {
     private Integer status;
 
     /**
+     * 用户类型
+     */
+    private String userType;
+
+    /**
      * 创建时间
      */
     private LocalDateTime createAt;

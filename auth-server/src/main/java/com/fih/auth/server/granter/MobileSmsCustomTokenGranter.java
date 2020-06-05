@@ -29,7 +29,8 @@ public class MobileSmsCustomTokenGranter extends AbstractCustomTokenGranter {
         String area_code = parameters.get("area_code");
         String mobile = parameters.get("mobile");
         String smscode = parameters.get("smscode");
-        return userDetailsService.loadUserByMobileAndSmscode(area_code,mobile, smscode,client_id);
+        String user_type = parameters.get("user_type");
+        return userDetailsService.loadUserByMobileAndSmscode(area_code,mobile, smscode,client_id,user_type);
     }
 
 }

@@ -1,6 +1,6 @@
 package com.fih.auth.server.exception;
 
-import com.fih.auth.server.common.Result;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -27,8 +27,10 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
         if (request.getRequestURI().equals("/oauth/token")) {
             if(!request.getParameterMap().containsKey(PARAM)||
                     !StringUtils.hasLength(request.getParameter(PARAM))){
-
-                throw new CustomOauthException("Client information is not included in the request:"+PARAM);
+                boolean hasClientBasicAuth = StringUtils.hasLength(request.getHeader(HttpHeaders.AUTHORIZATION));
+                 if(!hasClientBasicAuth) {
+                     throw new CustomOauthException("Client information is not included in the request:"+PARAM +" or basic auth info");
+                 }
             }
         }
 

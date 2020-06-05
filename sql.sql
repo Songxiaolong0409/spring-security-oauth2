@@ -53,6 +53,11 @@ update_at datetime comment '修改时间',
 UNIQUE KEY `Index_1` (`user_id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 comment '用户表详情';
 
+create table oauth_user_type(
+user_type_id bigint auto_increment primary key not null comment '用户类型id，自增主键',
+`client_id` varchar(48) NOT null comment '客户端ID',
+user_type varchar(30) not null comment '用户类型'
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 comment '用户类型表';
 
 CREATE TABLE `oauth_user_security_question` (
   `question_id` bigint(20) NOT NULL AUTO_INCREMENT,

@@ -1,6 +1,7 @@
 package com.fih.auth.server.service;
 
 import com.fih.auth.server.dao.IOauthUserDao;
+import com.fih.auth.server.dao.IOauthUserTypeDao;
 import com.fih.auth.server.model.OauthUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,6 +25,9 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private IOauthUserDao iOauthUserDao;
 
+    @Autowired
+    private IOauthUserTypeDao iOauthUserTypeDao;
+
     public OauthUser loadUserByMobileAndPassword(String areaCode, String mobile, String password, String clientId) {
         if (StringUtils.isEmpty(areaCode) || StringUtils.isEmpty(mobile)) {
             throw new InvalidGrantException("手机号不能为空");
@@ -44,14 +48,22 @@ public class CustomUserDetailsService implements UserDetailsService {
         return oauthUser;
     }
 
-    public OauthUser loadUserByMobileAndSmscode(String areaCode, String mobile, String smscode, String clientId) {
+    public OauthUser loadUserByMobileAndSmscode(String areaCode, String mobile, String smscode, String clientId,String user_type) {
         if (StringUtils.isEmpty(areaCode) || StringUtils.isEmpty(mobile)) {
             throw new InvalidGrantException("手机号不能为空");
         } else if (StringUtils.isEmpty(smscode)) {
             throw new InvalidGrantException("验证码不能为空");
         } else if (StringUtils.isEmpty(clientId)) {
             throw new InvalidGrantException("clientId 不能为空");
+        } else if (StringUtils.isEmpty(user_type)) {
+            throw new InvalidGrantException("参数 'user_type' 不能为空");
         }
+        // 验证用户类型是否正确
+        if(!iOauthUserTypeDao.getUserTypeExist(clientId,user_type)){
+            throw new InvalidGrantException("用户类型'"+user_type+"'不存在");
+        }
+
+
         // 判断成功后返回用户细节
         OauthUser oauthUser = iOauthUserDao.getCustomUserByMobile(areaCode, mobile, clientId);
         if (oauthUser == null) {
@@ -59,6 +71,9 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
 
         //TODO 验证短信码
+
+        oauthUser.setUserType(user_type);
+
         return oauthUser;
     }
 
